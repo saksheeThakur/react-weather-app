@@ -17,20 +17,29 @@ function App() {
     fetchWeather(city);
   }, [city]);
 
-  const fetchWeather = async (city) => {
-    try {
-      const currentRes = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
-      );
-      const forecastRes = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${API_KEY}`
-      );
-      setCurrentData(currentRes.data);
-      setForecastData(forecastRes.data);
-    } catch (error) {
-      alert("City not found");
+const fetchWeather = async (city) => {
+  try {
+    const currentRes = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
+    );
+    const forecastRes = await fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${API_KEY}`
+    );
+
+    if (!currentRes.ok || !forecastRes.ok) {
+      throw new Error("City not found");
     }
-  };
+
+    const currentData = await currentRes.json();
+    const forecastData = await forecastRes.json();
+
+    setCurrentData(currentData);
+    setForecastData(forecastData);
+  } catch (error) {
+    alert("City not found");
+  }
+};
+
 
   return (
     <div className="p-5 max-w-4xl mx-auto">
