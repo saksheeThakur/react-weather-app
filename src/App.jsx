@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import WeatherSearch from "./WeatherSearch.jsx";
 import CurrentWeather from "./CurrentWeather.jsx";
+import Forecast from "./Forcast.jsx";
 import React from "react";
 
 const API_KEY = "c6f7dabc83e24eac7242603af976d2f8";
